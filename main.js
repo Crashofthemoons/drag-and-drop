@@ -28,13 +28,13 @@ const DragDropManager = Object.create(null, {
             // TODO: This should only happen if the target has no children nodes
             // TODO: This should not happen if the target is another stage card
             
-                if (data.firstChild != undefined) {
-                    console.log(data.firstChild)
-                    e.target.parentNode.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
-                    console.log(data.firstChild)
-                } else {
-                    e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`)) 
-                }
+            if (target.childNode != undefined) {
+              e.setAttribute('draggable', false)
+            } else {
+              e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
+
+            }
+          
           }
         })
       }
