@@ -10,12 +10,13 @@ const DragDropManager = Object.create(null, {
           }
         })
   
-  
+        const origin = document.querySelector('.origin')
         const targets = document.querySelectorAll(".target")
   
         targets.forEach(target => {
           // Dragover not supported by default. Turn that off.
           target.ondragover = e => e.preventDefault()
+          origin.ondragover = e => e.preventDefault()
   
           target.ondrop = e => {
             // Enabled dropping on targets
@@ -27,9 +28,11 @@ const DragDropManager = Object.create(null, {
             // Append card to target component as child
             // TODO: This should only happen if the target has no children nodes
             // TODO: This should not happen if the target is another stage card
-            
-            if (target.childNode != undefined) {
-              e.setAttribute('draggable', false)
+            console.log("target.childNode", target.childNodes)
+            if (target.childNodes.length >= 1) {
+              e.target.setAttribute('draggable', false)
+            } else if (origin.childNodes >= 3) {
+              e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
             } else {
               e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
 
@@ -37,6 +40,8 @@ const DragDropManager = Object.create(null, {
           
           }
         })
+
+
       }
     }
   })
