@@ -1,4 +1,6 @@
-const DragDropManager = Object.create(null, {
+
+
+  const DragDropManager = Object.create(null, {
     init: {
       value: () => {
         const stages = document.querySelectorAll(".stage")
@@ -10,38 +12,38 @@ const DragDropManager = Object.create(null, {
           }
         })
   
-        const origin = document.querySelector('.origin')
+  
         const targets = document.querySelectorAll(".target")
   
         targets.forEach(target => {
           // Dragover not supported by default. Turn that off.
           target.ondragover = e => e.preventDefault()
-          origin.ondragover = e => e.preventDefault()
   
           target.ondrop = e => {
-            // Enabled dropping on targets
-            e.preventDefault()
+            console.log(target);
+            // Enabled dropping on target
+            const data = e.dataTransfer.getData("text")
+
+            if (target.childNodes.length === 0) {
+              e.preventDefault()
+              e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
+              console.log("check2")
+            } else if (target === document.querySelector('article')) {
+              console.log("check")
+              e.preventDefault()
+              document.querySelector('article').appendChild(document.querySelector(`.${data.split(" ")[1]}`))
+            } else {
+              console.log('denied')
+            }
   
             // Determine what's being dropped
-            const data = e.dataTransfer.getData("text")
-            console.log(data)
+  
             // Append card to target component as child
             // TODO: This should only happen if the target has no children nodes
             // TODO: This should not happen if the target is another stage card
-            console.log("target.childNode", target.childNodes)
-            if (target.childNodes.length >= 1) {
-              e.target.setAttribute('draggable', false)
-            } else if (origin.childNodes >= 3) {
-              e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
-            } else {
-              e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
-
-            }
-          
+            
           }
         })
-
-
       }
     }
   })
